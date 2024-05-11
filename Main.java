@@ -4,57 +4,53 @@ import java.lang.Math;
 
 public class Main
 {
-    public static void main(String[] args) 
+  public static void main(String[] args) 
+  {
+      ArrayList<Integer> numberList = new ArrayList<Integer>();
+      numberList.add(3);
+      numberList.add(4);
+      numberList.add(2);
+      numberList.add(1);
+      System.out.println("Iterative: " + IterativeBaseConverter(numberList, 5));
+      System.out.println("Recursive: " + RecursiveBaseConverter(numberList, 5));
+  }
+  
+  public static int IterativeBaseConverter(ArrayList<Integer> digits, int base)
+  {
+      int num = 0;
+      int numDigits = digits.size();
+
+      for (int i = 0; i < numDigits; i++)
+      {
+          int value = digits.get(i);
+          Double multiplier = Math.pow(base, numDigits - 1 - i); // Flips the position of the digit
+
+          num += value * multiplier; 
+      }
+      return num;
+  }
+
+  public static int RecursiveBaseConverter(ArrayList<Integer> digits, int base)
+  {
+    int numDigits = digits.size();
+    System.out.println("Digit: " + numDigits);
+
+    if (numDigits == 1)
+    { return digits.get(0); }
+
+    else
     {
-        String number = "5F3A";
-        ArrayList<String> numberList = new ArrayList<String>();
-        for (int i = 0; i < number.length(); i++)
-        {
-            numberList.add(number.charAt(i));
-        }
+      int value = digits.get(0);
 
-        System.out.println(numberList);
-        System.out.println(IterativeBaseConverter(numberList, 16));
+      int multiplier = (int)Math.pow(base, (numDigits-1));
+      System.out.println(base + "^" + (numDigits-1));
+
+      int num = value * multiplier;
+
+      ArrayList<Integer> newList = new ArrayList<Integer>(digits);
+      newList.remove(0);
+
+      return num + RecursiveBaseConverter(newList, base);
     }
-
-    public static int digitConverter(String digit)
-    {
-        ArrayList<Object> hexNum = new ArrayList<Object>();
-        hexNum.add(0);
-        hexNum.add(1);
-        hexNum.add(2);
-        hexNum.add(3);
-        hexNum.add(4);
-        hexNum.add(5);
-        hexNum.add(6);
-        hexNum.add(7);
-        hexNum.add(8);
-        hexNum.add(9);
-        hexNum.add("A");
-        hexNum.add("B");
-        hexNum.add("C");
-        hexNum.add("D");
-        hexNum.add("E");
-        hexNum.add("F");
-
-        return hexNum.indexOf(digit);
-    }
-
-    public static int IterativeBaseConverter(ArrayList<String> digits, int base)
-    {
-        int num = 0;
-        int numDigits = digits.size();
-
-        for (int i = 0; i < numDigits; i++)
-        {
-            String value = digits.get(i);
-            int digit = digitConverter(value);
-            System.out.println(digit);
-            Double multiplier = Math.pow(base, numDigits - 1 - i); // Flips the position of the digit
-
-            num += digit * multiplier; 
-        }
-
-        return num;
-    }
+  }
 }
