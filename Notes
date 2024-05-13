@@ -1,0 +1,18 @@
+    // public static int LogarithmicCalculator(int base, int argument)
+    // {
+    //     int exp = 0;
+    //     do
+    //     {
+    //         if (argument > 1)
+    //         {
+    //             argument /= base;
+    //             exp ++;
+    //             System.out.println("Argument: " + argument);
+    //         }
+    //         else
+    //         { break; }
+    //     }
+    //     while(true);
+
+    //     return exp;
+    // }
