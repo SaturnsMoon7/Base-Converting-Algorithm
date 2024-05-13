@@ -15,8 +15,7 @@ public class Main
         System.out.println("Iterative: " + IterativeBaseConverter(numberList, base));
         System.out.println("Recursive: " + RecursiveBaseConverter(numberList, base));
 
-        System.out.println(Log(3, 7));
-        //System.out.println("Iterative: " + IterativeBaseConverterMod(numberList, base, 6));
+        System.out.println("Iterative: " + IterativeBaseConverterMod(numberList, base, 6));
     }
 
     public static int IterativeBaseConverter(ArrayList<Integer> digits, int base)
@@ -57,19 +56,6 @@ public class Main
         }
     }
 
-    // Argument must be element of Reals
-    public static int Log(int base, int argument)
-    {
-        if ((argument % base) != 0) // Checks if argument is multiple of base (will be false at base if log is not whole #)
-            { throw new ArithmeticException(); }
-
-        if (argument == base)
-        { return 1; }
-        else
-        { argument /= base; }
-
-        return 1 + Log(base, argument);
-    }
 
     public static int IterativeBaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
     {
@@ -87,13 +73,32 @@ public class Main
             initialNum += value * multiplier; 
         }
         
-        int finalNum = 0;
-        int remainder = initialNum % finalBase;
-        int digitSize = Log(finalBase, (finalNum - remainder));
+        ArrayList<String> newDigits = new ArrayList<String>();
 
-        ArrayList<Integer> finalNum
+        do
+        {
+            if ((initialNum - (initialNum % finalBase)) == 0 )
+            {   
+                int remainder = initialNum % finalBase;
+                newDigits.add(0, String.valueOf(remainder));
 
-        return finalNum;
+                initialNum /= finalBase;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        while (true);
+        
+        String finalNum = "";
+        for (String digit : newDigits)
+        {
+            finalNum += digit;
+        }
+        
+
+        return Integer.valueOf(finalNum);
     }
 } 
 

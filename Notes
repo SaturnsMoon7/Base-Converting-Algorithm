@@ -1,18 +1,33 @@
-    // public static int LogarithmicCalculator(int base, int argument)
-    // {
-    //     int exp = 0;
-    //     do
-    //     {
-    //         if (argument > 1)
-    //         {
-    //             argument /= base;
-    //             exp ++;
-    //             System.out.println("Argument: " + argument);
-    //         }
-    //         else
-    //         { break; }
-    //     }
-    //     while(true);
+    public static int LogarithmicCalculator(int base, int argument)
+    {
+        int exp = 0;
+        do
+        {
+            if (argument > 1)
+            {
+                argument /= base;
+                exp ++;
+                System.out.println("Argument: " + argument);
+            }
+            else
+            { break; }
+        }
+        while(true);
 
-    //     return exp;
-    // }
+        return exp;
+    }
+
+
+    // Argument must be element of Reals
+    public static int Log(int base, int argument)
+    {
+        if ((argument % base) != 0) // Checks if argument is multiple of base (will be false at base if log is not whole #)
+            { throw new ArithmeticException(); }
+
+        if (argument == base)
+        { return 1; }
+        else
+        { argument /= base; }
+
+        return 1 + Log(base, argument);
+    }
