@@ -5,22 +5,30 @@ public class Main
     {
     public static void main(String[] args) 
     {
-        ArrayList<Integer> numberList = new ArrayList<Integer>();
-        numberList.add(7);
-        numberList.add(2);
-        numberList.add(4);
-        numberList.add(3); 
-        int base = 8;
+        int number = 8436;
+        int initialBase = 9;
+        int finalBase = 4;
 
-        System.out.println("Iterative: " + IterativeBaseConverter(numberList, base));
-        System.out.println("Recursive: " + RecursiveBaseConverter(numberList, base));
+        ArrayList<Integer> digitliList = new ArrayList<Integer>();
+        String digitString = String.valueOf(number);
 
-        System.out.println("Iterative: " + IterativeBaseConverterMod(numberList, base, 6));
+        for (int i = 0; i < digitString.length(); i++)
+        { 
+            char digitChar = digitString.charAt(i);
+            String charString = String.valueOf(digitChar);
+            int strInt = Integer.parseInt(charString);
+            digitliList.add(strInt); 
+        }
+        
+        System.out.println("Iterative: " + IterativeBaseConverter(digitliList, initialBase));
+        System.out.println("Recursive: " + RecursiveBaseConverter(digitliList, initialBase));
+
+        System.out.println("Iterative (base" + initialBase + ")-->(base" + finalBase + "): " + IterativeBaseConverterMod(digitliList, initialBase, finalBase));
     }
 
     public static int IterativeBaseConverter(ArrayList<Integer> digits, int base)
     {
-        int num = 0;
+        int base10 = 0;
         int numDigits = digits.size();
 
         for (int i = 0; i < numDigits; i++) // Loops through each index of the list
@@ -31,9 +39,9 @@ public class Main
             { throw new ArithmeticException("Unknown symbol"); }
 
             int multiplier = (int)Math.pow(base, (numDigits - 1) - i); // The base to the power of the difference of #digits and (i)
-            num += value * multiplier; 
+            base10 += value * multiplier; 
         }
-        return num;
+        return base10;
     }
 
     public static int RecursiveBaseConverter(ArrayList<Integer> digits, int base)
@@ -72,33 +80,33 @@ public class Main
             int multiplier = (int)Math.pow(intialBase, (numDigits - 1) - i); // The base to the power of the difference of #digits and (i)
             initialNum += value * multiplier; 
         }
-        
+
+
+
+
         ArrayList<String> newDigits = new ArrayList<String>();
 
-        do
+        boolean looping = true;
+        while (looping) 
         {
-            if ((initialNum - (initialNum % finalBase)) == 0 )
-            {   
+            if (initialNum < finalBase)
+            {
+                newDigits.add(0, String.valueOf(initialNum));
+                looping = false;
+            }
+            else 
+            {
                 int remainder = initialNum % finalBase;
                 newDigits.add(0, String.valueOf(remainder));
-
-                initialNum /= finalBase;
-            }
-            else
-            {
-                return 0;
+                initialNum = (initialNum-remainder) / finalBase;
             }
         }
-        while (true);
-        
+
         String finalNum = "";
-        for (String digit : newDigits)
-        {
-            finalNum += digit;
-        }
-        
+        for (int i = 0; i < newDigits.size(); i++)
+        { finalNum += newDigits.get(i); }
 
-        return Integer.valueOf(finalNum);
+        return Integer.parseInt(finalNum);
     }
 } 
 
