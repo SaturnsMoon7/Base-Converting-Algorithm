@@ -67,6 +67,7 @@ public class Main
 
     public static int IterativeBaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
     {
+        // Converting intial base to base10
         int initialNum = 0;
         int numDigits = digits.size();
 
@@ -81,34 +82,41 @@ public class Main
             initialNum += value * multiplier; 
         }
 
-
-
-
+        // Converting base10 number to final base
         ArrayList<String> newDigits = new ArrayList<String>();
 
         boolean looping = true;
-        while (looping) 
+        while (looping) // Divides the base10 number each loop
         {
-            if (initialNum < finalBase)
+            if (initialNum < finalBase) // Dividing the last number thats smaller than the finalBase will give decimal
             {
-                newDigits.add(0, String.valueOf(initialNum));
+                newDigits.add(0, String.valueOf(initialNum)); // Converts the digit to a string and adds to list
                 looping = false;
             }
-            else 
+            else
             {
-                int remainder = initialNum % finalBase;
-                newDigits.add(0, String.valueOf(remainder));
-                initialNum = (initialNum-remainder) / finalBase;
+                int remainder = initialNum % finalBase; // Saves the remainder;    
+                newDigits.add(0, String.valueOf(remainder));                  
+                initialNum = (initialNum - remainder) / finalBase; // Makes the initialNum the # of whole divisions possible by the base    
             }
         }
 
+        /* 
+        The backward order of the remainders
+        froms each division will be the number
+        in the new base.
+        */
+
         String finalNum = "";
         for (int i = 0; i < newDigits.size(); i++)
-        { finalNum += newDigits.get(i); }
+        { finalNum += newDigits.get(i); } // Concatenates the digits in newDigits into one string
 
-        return Integer.parseInt(finalNum);
+        return Integer.parseInt(finalNum); // Returns the string converted to int
     }
 } 
+
+
+
 
 // How to convert double to int
 // How to have multiple data types in a list
@@ -118,3 +126,10 @@ public class Main
 // How to convert base2 to any base (except base10)
 // How to convert int to string
 // Do {} While {}
+
+// Base to base conversion reference: 
+    /* 
+    https://math.libretexts.org/Courses/College_of_the_Canyons/Math_130%3A_Math_for_Elementary_School_Teachers_(Lagusker)/
+    02%3A_Empathy_and_Primary_Mathematics/2.06%3A_Converting_Between_(our)_Base_10_and_Any_Other_Base_(and_vice_versa)#:~:
+    text=Example,2.6.1
+    */
