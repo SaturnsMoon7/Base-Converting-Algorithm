@@ -15,18 +15,19 @@ public class Main
         for (int i = 0; i < digitString.length(); i++)
         { 
             char digitChar = digitString.charAt(i);
-            String charString = String.valueOf(digitChar);
-            int strInt = Integer.parseInt(charString);
-            digitliList.add(strInt); 
+            digitliList.add(Character.getNumericValue(digitChar)); // Converts char to integer
         }
         
-        System.out.println("Iterative: " + IterativeBaseConverter(digitliList, initialBase));
-        System.out.println("Recursive: " + RecursiveBaseConverter(digitliList, initialBase));
+        System.out.println("base to base10");
+        System.out.println("Iterative (base" + initialBase + ")-->(base10): " + IterativeBase10Converter(digitliList, initialBase));
+        System.out.println("Recursive (base" + initialBase + ")-->(base10): " + RecursiveBase10Converter(digitliList, initialBase));
 
-        System.out.println("Iterative (base" + initialBase + ")-->(base" + finalBase + "): " + IterativeBaseConverterMod(digitliList, initialBase, finalBase));
+        System.out.println();
+        System.out.println("base to base");
+        System.out.println("Iterative (base" + initialBase + ")-->(base" + finalBase + "): " + IterativeBase2BaseConverterMod(digitliList, initialBase, finalBase));
     }
 
-    public static int IterativeBaseConverter(ArrayList<Integer> digits, int base)
+    public static int IterativeBase10Converter(ArrayList<Integer> digits, int base)
     {
         int base10 = 0;
         int numDigits = digits.size();
@@ -44,7 +45,7 @@ public class Main
         return base10;
     }
 
-    public static int RecursiveBaseConverter(ArrayList<Integer> digits, int base)
+    public static int RecursiveBase10Converter(ArrayList<Integer> digits, int base)
     {
         int numDigits = digits.size();
 
@@ -60,12 +61,12 @@ public class Main
             ArrayList<Integer> newList = new ArrayList<Integer>(digits); // Clones digitsList
             newList.remove(0); // Removes the first element in the list
 
-            return num + RecursiveBaseConverter(newList, base); // Recursion
+            return num + RecursiveBase10Converter(newList, base); // Recursion
         }
     }
 
 
-    public static int IterativeBaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
+    public static int IterativeBase2BaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
     {
         // Converting intial base to base10
         int initialNum = 0;
@@ -113,6 +114,13 @@ public class Main
 
         return Integer.parseInt(finalNum); // Returns the string converted to int
     }
+
+    public static int RecursiveBase2BaseConverter(ArrayList<Integer> digits, int intiialBase, int finalBase)
+    {
+        int finalNum = 0;
+
+        return finalNum;
+    }
 } 
 
 
@@ -126,6 +134,7 @@ public class Main
 // How to convert base2 to any base (except base10)
 // How to convert int to string
 // Do {} While {}
+//How to convert char to int
 
 // Base to base conversion reference: 
     /* 
