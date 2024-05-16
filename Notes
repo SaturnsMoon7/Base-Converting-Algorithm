@@ -1,3 +1,5 @@
+    
+    // Custom log calc
     public static int LogarithmicCalculator(int base, int argument)
     {
         int exp = 0;
@@ -30,4 +32,103 @@
         { argument /= base; }
 
         return 1 + Log(base, argument);
+    }
+
+
+// Bonus iterative base to base (any)
+    public static int IterativeBase2BaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
+    {
+        // Converting intial base to base10
+        int initialNum = 0;
+        int numDigits = digits.size();
+
+        for (int i = 0; i < numDigits; i++) // Loops through each index of the list
+        {
+            int value = digits.get(i); // The digit in position (i)
+
+            if (value > (intialBase - 1)) // Checks if number is a valid symbol for the base
+            { throw new ArithmeticException("Unknown symbol"); }
+
+            int multiplier = (int)Math.pow(intialBase, (numDigits - 1) - i); // The base to the power of the difference of #digits and (i)
+            initialNum += value * multiplier; 
+        }
+
+        // Converting base10 number to final base
+        ArrayList<String> newDigits = new ArrayList<String>();
+
+        boolean looping = true;
+        while (looping) // Divides the base10 number each loop
+        {
+            if (initialNum < finalBase) // Dividing the last number thats smaller than the finalBase will give decimal
+            {
+                newDigits.add(0, String.valueOf(initialNum)); // Converts the digit to a string and adds to list
+                looping = false;
+            }
+            else
+            {
+                int remainder = initialNum % finalBase; // Saves the remainder;    
+                newDigits.add(0, String.valueOf(remainder));                  
+                initialNum = (initialNum - remainder) / finalBase; // Makes the initialNum the # of whole divisions possible by the base    
+            }
+        }
+
+        /* 
+        The backward order of the remainders
+        froms each division will be the number
+        in the new base.
+        */
+
+        String finalNum = "";
+        for (int i = 0; i < newDigits.size(); i++)
+        { finalNum += newDigits.get(i); } // Concatenates the digits in newDigits into one string
+
+        return Integer.parseInt(finalNum); // Returns the string converted to int
+    }
+
+    public static int RecursiveBase2BaseConverter(ArrayList<Integer> digits, int intiialBase, int finalBase)
+    {
+        int finalNum = 0;
+        
+        return finalNum;
+    }
+
+
+
+
+
+    // Bonus iterative with arrayList argument
+    public static int IterativeBaseBaseConverter(ArrayList<Integer> digits, int base)
+    {   
+        // Create a string of digits
+        String initialStringNum = "";
+        for (int digit : digits)
+        { initialStringNum += digit; }
+
+        // Convert initialStringNum to int
+        int initialNum = Integer.parseInt(initialStringNum);
+        ArrayList<String> newDigits = new ArrayList<String>(); // New digit arrayList
+
+        boolean looping = true;
+        while (looping)
+        {
+
+            if (initialNum < base) // The last digit
+            {
+                newDigits.add(0, String.valueOf(initialNum));
+                looping = false;
+            } 
+            else
+            {
+                int remainder = initialNum % base;
+                newDigits.add(0, String.valueOf(remainder));
+                initialNum = (initialNum - remainder) / base;
+            }
+        }
+
+        // Combines newDigits into one str
+        String finalStringNum = "";
+        for (String finalDigits : newDigits)
+        { finalStringNum += finalDigits; }
+
+        return Integer.parseInt(finalStringNum); // Converts finalStringNum to int
     }

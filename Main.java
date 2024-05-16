@@ -5,13 +5,12 @@ public class Main
     {
     public static void main(String[] args) 
     {
-        int number = 8436;
+        int number = 6473;
         int initialBase = 9;
         int finalBase = 4;
 
         ArrayList<Integer> digitliList = new ArrayList<Integer>();
         String digitString = String.valueOf(number);
-
         for (int i = 0; i < digitString.length(); i++)
         { 
             char digitChar = digitString.charAt(i);
@@ -22,34 +21,58 @@ public class Main
         System.out.println("Iterative (base" + initialBase + ")-->(base10): " + IterativeBase10Converter(digitliList, initialBase));
         System.out.println("Recursive (base" + initialBase + ")-->(base10): " + RecursiveBase10Converter(digitliList, initialBase));
 
-        System.out.println();
-        System.out.println("base to base");
-        System.out.println("Iterative (base" + initialBase + ")-->(base" + finalBase + "): " + IterativeBase2BaseConverterMod(digitliList, initialBase, finalBase));
+        System.out.println("base10 to base");
+        System.out.println("Iteractive (base10)-->(base" + finalBase + "): " + IterativeBaseBaseConverter(number, finalBase));
+
     }
 
+    /* What quantity is the input "n" into your algorithm?
+        The size of digitsArrayList is "n" in the function because the run-time of the function
+        increases as the number of indices in digits increase.
+    */
+    /* What is the time complexity in Big O Notation of your algorithm? Explain/show your 
+       reasoning to justify your answer.
+        The time complexity in Big O Notation of the function is O(log(n)). The time complexity 
+        of most lines are O(1) and O(n), but the Math.power() function has a time complexity
+        of O(log(n)) which is more dominant than the other time complexities.
+     */
     public static int IterativeBase10Converter(ArrayList<Integer> digits, int base)
     {
-        int base10 = 0;
-        int numDigits = digits.size();
+        int base10 = 0;                                                                                                                          
+        int numDigits = digits.size();                                
 
-        for (int i = 0; i < numDigits; i++) // Loops through each index of the list
+        // Loops through each index of the list
+        for (int i = 0; i < numDigits; i++)                                  
         {
             int value = digits.get(i); // The digit in position (i)
 
-            if (value > (base - 1)) // Checks if number is a valid symbol for the base
-            { throw new ArithmeticException("Unknown symbol"); }
-
-            int multiplier = (int)Math.pow(base, (numDigits - 1) - i); // The base to the power of the difference of #digits and (i)
-            base10 += value * multiplier; 
+            // Checks if number is a valid a symbol for the base
+            // If invalid, will throw error
+            if (value > (base - 1))                                           
+            { throw new ArithmeticException("Unknown symbol"); } 
+            
+            int multiplier = (int)Math.pow(base, (numDigits - 1) - i);       
+            // The base to the power of the difference between #digits and (i)
+            base10 += value * multiplier;                                    
         }
-        return base10;
+        return base10;                                                        
     }
 
+    /* What quantity is the input "n" into your algorithm?
+        The size of digitsArrayList is "n" in the function because the run-time of the function
+        increases as the number of indices in digits increase.
+    */
+    /* What is the time complexity in Big O Notation of your algorithm? Explain/show your 
+       reasoning to justify your answer.
+        The time complexity in Big O Notation of the function is O(log(n)). The time complexity 
+        of most lines are O(1) and O(n), but the Math.power() function has a time complexity
+        of O(log(n)) which is more dominant than the other time complexities.
+     */
     public static int RecursiveBase10Converter(ArrayList<Integer> digits, int base)
     {
-        int numDigits = digits.size();
+        int numDigits = digits.size();                                       
 
-        if (numDigits == 1) // Base case 
+        if (numDigits == 1) // Base case                                     
         { return digits.get(0); } // Last digit is raised to the power of 0
 
         else
@@ -58,72 +81,35 @@ public class Main
             int multiplier = (int)Math.pow(base, (numDigits - 1)); // The base to the power of digits.size()
             int num = value * multiplier;
 
-            ArrayList<Integer> newList = new ArrayList<Integer>(digits); // Clones digitsList
-            newList.remove(0); // Removes the first element in the list
+            digits.remove(0); // Removes the first element in the list
 
-            return num + RecursiveBase10Converter(newList, base); // Recursion
+            return num + RecursiveBase10Converter(digits, base); // Recurses
         }
     }
-
-
-    public static int IterativeBase2BaseConverterMod(ArrayList<Integer> digits, int intialBase, int finalBase)
-    {
-        // Converting intial base to base10
-        int initialNum = 0;
-        int numDigits = digits.size();
-
-        for (int i = 0; i < numDigits; i++) // Loops through each index of the list
-        {
-            int value = digits.get(i); // The digit in position (i)
-
-            if (value > (intialBase - 1)) // Checks if number is a valid symbol for the base
-            { throw new ArithmeticException("Unknown symbol"); }
-
-            int multiplier = (int)Math.pow(intialBase, (numDigits - 1) - i); // The base to the power of the difference of #digits and (i)
-            initialNum += value * multiplier; 
-        }
-
-        // Converting base10 number to final base
-        ArrayList<String> newDigits = new ArrayList<String>();
+    
+    public static int IterativeBaseBaseConverter(int initialNum, int base)
+    {   
+        String finalStringNum = "";
 
         boolean looping = true;
-        while (looping) // Divides the base10 number each loop
+        while (looping)
         {
-            if (initialNum < finalBase) // Dividing the last number thats smaller than the finalBase will give decimal
-            {
-                newDigits.add(0, String.valueOf(initialNum)); // Converts the digit to a string and adds to list
+            if (initialNum < base) // The last digit
+            {   
+                finalStringNum = String.valueOf(initialNum) + finalStringNum; // Inserts last digit to beginning of finalStringNum
                 looping = false;
-            }
+            } 
             else
             {
-                int remainder = initialNum % finalBase; // Saves the remainder;    
-                newDigits.add(0, String.valueOf(remainder));                  
-                initialNum = (initialNum - remainder) / finalBase; // Makes the initialNum the # of whole divisions possible by the base    
+                int remainder = initialNum % base;
+                finalStringNum = String.valueOf(remainder) + finalStringNum; // Inserts the remainder to the beginning of finalStringNum
+                initialNum = (initialNum - remainder) / base;
             }
+            
         }
-
-        /* 
-        The backward order of the remainders
-        froms each division will be the number
-        in the new base.
-        */
-
-        String finalNum = "";
-        for (int i = 0; i < newDigits.size(); i++)
-        { finalNum += newDigits.get(i); } // Concatenates the digits in newDigits into one string
-
-        return Integer.parseInt(finalNum); // Returns the string converted to int
-    }
-
-    public static int RecursiveBase2BaseConverter(ArrayList<Integer> digits, int intiialBase, int finalBase)
-    {
-        int finalNum = 0;
-
-        return finalNum;
+        return Integer.parseInt(finalStringNum); // Converts finalStringNum to int
     }
 } 
-
-
 
 
 // How to convert double to int
