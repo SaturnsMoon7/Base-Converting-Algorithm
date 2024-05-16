@@ -7,6 +7,7 @@ public class Main {
         int initialBase = 9;
         int finalBase = 4;
 
+        // Convert number to a string
         ArrayList<Integer> digitliList = new ArrayList<Integer>();
         String digitString = String.valueOf(number);
 
@@ -21,7 +22,6 @@ public class Main {
         System.out.println(); 
         System.out.println("base10 --> base(?)");
         System.out.println("Iteractive: " + number + "(base10) --> " + IterativeBaseBaseConverter(number, finalBase) + "(base" + finalBase + ")");
-
     }
 
 
@@ -47,7 +47,7 @@ public class Main {
 
             // Checks if number is a valid a symbol for the base
             // If invalid, will throw error
-            if (value > (base - 1)) throw new ArithmeticException("Unknown symbol"); 
+            if (value > (base - 1)) { throw new ArithmeticException("Unknown symbol"); } 
             
             int multiplier = (int)Math.pow(base, (numDigits - 1) - i);       
             // The base to the power of the difference between #digits and (i)
@@ -69,21 +69,17 @@ public class Main {
             recurses for the number of indices in digits, the time complexities for both will 
             be combined into O(nlog(n)).
      */
-    public static int RecursiveBase10Converter(ArrayList<Integer> digits, int base)
-    {
+    public static int RecursiveBase10Converter(ArrayList<Integer> digits, int base) {
         int numDigits = digits.size();                                       
 
-        if (numDigits == 1) // Base case                                     
-        { return digits.get(0); } // Last digit is raised to the power of 0
-
-        else
-        {
+        // Base case 
+        if (numDigits == 1) { return digits.get(0); }  // Last digit is raised to the power of 0
+        else {
             int value = digits.get(0); // The digit in position (i)
 
             // Checks if number is a valid a symbol for the base
             // If invalid, will throw error
-            if (value > (base - 1))                                           
-            { throw new ArithmeticException("Unknown symbol"); } 
+            if (value > (base - 1)) { throw new ArithmeticException("Unknown symbol"); } 
 
             int multiplier = (int)Math.pow(base, (numDigits - 1)); // The base to the power of digits.size()
             int num = value * multiplier;
@@ -107,20 +103,15 @@ public class Main {
             operator, the loop will run with a time complexity of O(log(n)) as initial num
             decreases exponentially.
      */
-    public static int IterativeBaseBaseConverter(int initialNum, int base)
-    {   
+    public static int IterativeBaseBaseConverter(int initialNum, int base) {   
         String finalStringNum = "";
 
         boolean looping = true;
-        while (looping)
-        {
-            if (initialNum < base) // The last digit
-            {   
+        while (looping) {
+            if (initialNum < base) { // The last digit 
                 finalStringNum = String.valueOf(initialNum) + finalStringNum; // Inserts last digit to beginning of finalStringNum
                 looping = false;
-            } 
-            else
-            {
+            } else {
                 int remainder = initialNum % base; // Modulo operation determines the remainder of initialNum / base
                 finalStringNum = String.valueOf(remainder) + finalStringNum; // Inserts the remainder to the beginning of finalStringNum
                 initialNum = (initialNum - remainder) / base;
